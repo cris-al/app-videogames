@@ -1,0 +1,13 @@
+.contPt{
+    height: 20px;
+    color: black;
+    margin-bottom: 5px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.btnPt{
+    background-color: #52c234;
+    border-radius: 5px;
+}

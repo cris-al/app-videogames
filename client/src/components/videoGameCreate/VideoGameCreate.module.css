@@ -1,0 +1,147 @@
+.containerVC{
+    display: flex;
+    flex-direction: column;
+    height:100vh;
+    margin: 0;
+    font-family: 'Fredoka One', 'cursive';
+}
+.titleVC{
+    text-shadow: 3px 3px 3px rgb(4, 142, 25);
+}
+form{
+   margin: 0 auto;
+   padding: 20px;
+   background-color: rgb(55, 103, 88);
+   border-radius: 7px;
+   box-shadow: 0px 0px 50px rgba(0, 191, 255, 0.736);
+}
+.divName{
+    padding: 7px;
+    display: flex;
+    justify-content: flex-start;
+}
+.divName input{
+    margin-left: 76px;
+}
+form small{
+    color: rgb(255, 0, 0);
+    margin-left: -110px;
+}
+.divReleased{
+    padding: 7px;
+    display: flex;
+}
+.divReleased input{
+    margin-left: 16px;
+}
+.divRating{
+    padding: 7px;
+    display: flex;
+    justify-content: flex-start;
+}
+.divRating select{
+    margin-left: 78px;
+    margin-right: 3px;
+    border-radius: 5px;
+    background-color: rgb(194, 185, 185);
+    width: 50px;
+}
+.divDes{
+    padding: 7px;
+    display: flex;
+    justify-content: flex-start;
+}
+.divDes textarea{
+    margin-left: 33px;
+}
+.divPlatf{
+    padding: 7px;
+    display: flex;
+    justify-content: flex-start;
+}
+.divGenres{
+    padding: 7px;
+    display: flex;
+    justify-content: flex-start;
+}
+.inVC{
+    background-color: rgb(194, 185, 185);
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    outline: none;
+    margin-left: 10px;
+    display: flex;
+    flex: auto;
+}
+.inVC:focus{
+    border-color: #52c234;
+}
+.selRat{
+    border: none;
+    padding: 5px;
+    outline: none;
+}
+.sel1{
+    background-color: rgb(194, 185, 185);
+    border-radius: 5px;
+    margin-left: 43px;
+    cursor: pointer;
+    width: 300px;
+    border: none;
+    padding: 5px;
+    outline: none;
+}
+.sel2{
+    background-color: rgb(194, 185, 185);
+    border-radius: 5px;
+    margin-left: 66px;
+    cursor: pointer;
+    width: 300px;
+    border: none;
+    padding: 5px;
+    outline: none;
+}
+.btnCreate{
+    background-image: linear-gradient(to right, #52c234 0%, #061700  51%, #52c234  100%);
+    margin: 10px;
+    padding: 10px 15px;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 10px #eee;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+.btnCreate:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+  }
+.btnBack{
+    background-image: linear-gradient(to right, #52c234 0%, #061700  51%, #52c234  100%);
+    margin: 5px;
+    padding: 10px 15px;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 8px #eee;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+.btnBack:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+.containerPfGr{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 2px;
+    padding: 2px;
+}

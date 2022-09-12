@@ -1,0 +1,8 @@
+.containerPltf{
+   
+    box-shadow: 0px 0px 10px rgba(0, 191, 255, 0.736);
+    background-color: rgb(55, 103, 88);
+    border-radius: 8px;
+    margin: 2px;
+    padding: 5px;
+}

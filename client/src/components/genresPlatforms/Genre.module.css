@@ -1,0 +1,14 @@
+.contG{
+    height: 20px;
+    color: black;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.btnGr{
+    
+    background-color: #52c234;
+    border-radius: 5px;
+}

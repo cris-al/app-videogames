@@ -1,0 +1,28 @@
+.imageCard{
+    width: 300px;
+    height: 200px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 1px rgba(0, 191, 255, 0.736);
+}
+.container:hover {
+    
+    border-radius: 20px;
+    text-decoration: aqua;
+}
+.card{
+    justify-content: center;
+    height: 360px;
+    width: 350px;
+    border-radius: 10px;
+    display: inline-flex;
+    padding: 10px;
+    margin: 10px;
+    background-image: linear-gradient(to right, #1f221f 0%, #088b4e  51%, #312d2d  100%);
+}
+.card:hover {
+    box-shadow: 0px 0px 30px 1px rgba(0, 191, 255, 0.736);
+    transform: scale(1.02);
+}
+.card .container h3{
+    font-size: 17px;
+}
