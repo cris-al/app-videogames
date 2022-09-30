@@ -29,8 +29,12 @@ export default function VideoGameCreate(){
         released: '',
         rating: '',
         platforms: [],
-        genres: []
+        genres: [],
+        image: '',
+        imageId: ''
     });
+    var image;
+        
     const [errors, setErrors] = useState({});
     function handleChange(e){
         setGame({
@@ -75,9 +79,23 @@ export default function VideoGameCreate(){
         if(!game.name || !game.description || !game.platforms || !game.genres){
             alert('You must complete the required fields..!!');
         }else{
-            if(errors){
+            if(errors.length > 0){
                 alert('Error..!!');
             }else{
+                let data = new FormData();
+                data.append("file",image);
+                data.append("upload_preset","pkokipva");
+                fetch("https://api.cloudinary.com/v1_1/dzjonhhps/videogames-api/upload",{
+                    method: 'POST',
+                    body: data})
+                    .then(res=>res.json())
+                    .then(res=>{
+                    setGame({
+                        ...game,
+                        image: res.secure_url,
+                        imageId: res.public_id
+                    })}).catch(e=>alert('error...'))
+                    
                 dispatch(createVideoGame(game));
                 setGame({
                     name: '',
@@ -85,7 +103,8 @@ export default function VideoGameCreate(){
                     released: '',
                     rating: '',
                     platforms: [],
-                    genres: []
+                    genres: [],
+                    image: null
                 })
                 alert('VideoGame CREATED..');
             }
@@ -103,10 +122,16 @@ export default function VideoGameCreate(){
             platforms: [...game.platforms.filter(el => el!==pf)]
         })
     }
+    async function handleFile(e) {
+        e.preventDefault();
+        if(!image){
+            image = e.target.files[0];
+            
+        }
+        
+    }
     useEffect(()=>{
         dispatch(getGenres());
-    },[dispatch]);
-    useEffect(()=>{
         dispatch(getPlatforms());
     },[dispatch]);
     return(
@@ -159,6 +184,10 @@ export default function VideoGameCreate(){
                             ))
                         }
                     </select>
+                </div>
+                <div>
+                    <label>Image: </label>
+                    <input type="file" name='image' onChange={handleFile}/>
                 </div>
                 <button type="submit" className={Style.btnCreate}>Create</button>
                 <Link to='/home'><button className={Style.btnBack}>Back</button></Link>
