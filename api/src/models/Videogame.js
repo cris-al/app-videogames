@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     released: {
@@ -30,6 +30,9 @@ module.exports = (sequelize) => {
     platforms: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
+    },
+    imageId:{
+      type: DataTypes.STRING
     },
     created: {
       type: DataTypes.BOOLEAN,

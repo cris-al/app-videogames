@@ -1,66 +1,9 @@
 const { Router } = require('express');
 const axios = require('axios');
 const { Videogame, Genre } = require('../db.js');
-//const {API_KEY} = process.env;
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-//https://api.rawg.io/api/games?key=
+const {getAllVideoGames, getVideoGamesDB, arrayPf} = require('../utils/utils');
 
 const router = Router();
-const API_KEY = process.env.API_KEY;
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-var arrayPf =[];
-const getVideoGames = async () => {
-    var api = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-    var apiInf = api.data.results;
-    for (let i = 1; i < 5; i++) {
-        const napi = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i+1}`);
-        apiInf = apiInf.concat(napi.data.results);
-    }
-
-    const games = apiInf.map(el =>{
-        const obj = {
-            image: el.background_image,
-            id: el.id,
-            name: el.name,
-            released: el.released,
-            rating: el.rating,
-            platforms: el.platforms.map(el => {
-                const pf = el.platform.name;
-                return pf;
-            }),
-            genres: el.genres.map(el => {
-                const gn = el.name;
-                return gn;
-            })
-        }
-        return obj;
-    });
-    for (var i = 0; i < games.length; i++) {
-        for (let j = 0; j < games[i].platforms.length; j++) {
-            if(!arrayPf.length) arrayPf.push(games[i].platforms[j]);
-            else{
-                if(!arrayPf.includes(games[i].platforms[j])) arrayPf.push(games[i].platforms[j]);
-            }
-        }
-    }
-    return games;
-}
-const getVideoGamesDB = async () => {
-    return await Videogame.findAll({
-        include: [{
-            model: Genre
-        }]
-    });
-}
-const getAllVideoGames = async ()=> {
-    let gamesApi = await getVideoGames();
-    let gamesDB = await getVideoGamesDB();
-    let total = [...gamesApi, ...gamesDB];
-
-    return total;
-}
 
 router.get("/videogames", async (req, res)=>{
     try {
@@ -86,7 +29,7 @@ router.get("/videogames/search", async (req, res)=>{
             let games = videogames.filter(el => el.name.toLowerCase().includes(name.toLowerCase()));
             games.length?
             res.json(games):
-            res.json({msg:'No existe ningun VideoGame con ese nombre...'});
+            res.json({msg:'VideoGame not found...'});
         }else{
             res.send(videogames);
         }    
@@ -98,13 +41,12 @@ router.get("/videogames/:id", async (req, res)=>{
     const id = req.params.id;
     const allvideogames = await getAllVideoGames();
     const videogamesdb = await getVideoGamesDB();
-    //const videogameapi = await getVideoGames();
     try {
         if(id){
             if(isNaN(id)){
                 const filtdb = videogamesdb.filter(el => el.id === id);
                 if(filtdb) res.json(filtdb);
-                else res.send({mns:'The VideoGame does not exist..'})
+                else res.send({msg:'VideoGame not found..'})
             }else if(!isNaN(id)){
                 const filtapi = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
                 if(filtapi){
@@ -125,7 +67,7 @@ router.get("/videogames/:id", async (req, res)=>{
                         })
                     }
                     res.json(obj);     
-                }else res.send({mns: 'The VideoGame does not exist..'})
+                }else res.send({msg: 'VideoGame not found..'})
             }
 
         }else{
@@ -137,12 +79,17 @@ router.get("/videogames/:id", async (req, res)=>{
 })
 router.post("/videogames/create", async (req, res)=>{
     try {
-        let {name, image, description, released, rating, platforms, genres} = req.body;
+        let {name, description, released, rating, platforms, 
+            genres, imageId, image} = req.body;
+        if(!name) res.status(400).json({msg: 'name is require..'});
+        if(!description) res.status(400).json({msg: 'description is require..'});
+        if(!platforms) res.status(400).json({msg: 'platforms is require..'});
+        if(!genres) res.status(400).json({msg: 'genres is require..'});
         let gameCreated = await Videogame.create({
-            name, image, description, released, rating, platforms
+            name, image, description, released, rating, platforms, imageId
         });
         gameCreated.addGenres(genres);
-        res.send('VideoGame created..')
+        res.status(200).json({msg:'VideoGame created..'})
     } catch (error) {
         console.log(error);
     }
