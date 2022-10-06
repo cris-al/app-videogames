@@ -2,6 +2,7 @@ const { Router } = require('express');
 const axios = require('axios');
 const { Videogame, Genre } = require('../db.js');
 const {getAllVideoGames, getVideoGamesDB, arrayPf} = require('../utils/utils');
+const API_KEY = process.env.API_KEY;
 
 const router = Router();
 
@@ -110,7 +111,7 @@ router.get("/genres", async (req, res)=>{
             })
         });
         
-        const allGenres = await Genre.findAll();
+        const allGenres = await Genre.findAndCountAll({attributes: ['name']});
         res.send(allGenres);
     } catch (error) {
         console.log(error);
